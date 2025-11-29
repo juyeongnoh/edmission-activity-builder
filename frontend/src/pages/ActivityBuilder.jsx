@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ActivityCardList from "../components/ActivityCardList";
+import SideNav from "../components/SideNav";
 import mockData from "@/samples/activityData";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const ActivityBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [maxReachedStep, setMaxReachedStep] = useState(1);
   const [activityData, setActivityData] = useState({
     name: "",
     category: "",
@@ -28,6 +30,27 @@ const ActivityBuilder = () => {
     impactScore: 0,
   });
 
+  const steps = [
+    { number: 1, label: "Activity Name" },
+    { number: 2, label: "Category" },
+    { number: 3, label: "Tier" },
+    { number: 4, label: "Description" },
+    { number: 5, label: "Hours/Week" },
+    { number: 6, label: "Leadership" },
+    { number: 7, label: "Review" },
+  ];
+
+  const handleStepChange = (step) => {
+    if (step <= maxReachedStep) {
+      setCurrentStep(step);
+    }
+  };
+
+  const goToNextStep = (nextStep) => {
+    setCurrentStep(nextStep);
+    setMaxReachedStep(Math.max(maxReachedStep, nextStep));
+  };
+
   useEffect(() => {
     console.log("Activity Data Updated:", activityData);
   }, [activityData]);
@@ -36,8 +59,17 @@ const ActivityBuilder = () => {
     <div className="h-screen grid grid-rows-[auto_1fr] p-6 gap-6">
       <h1 className="text-2xl font-bold">Activity Builder</h1>
 
-      <div className="grid grid-cols-3 gap-8 min-h-0">
-        <div className="col-span-3 sm:col-span-2 overflow-y-auto">
+      <div className="grid min-h-0 grid-cols-6 gap-8">
+        <div className="hidden lg:block">
+          <SideNav
+            steps={steps}
+            currentStep={currentStep}
+            maxReachedStep={maxReachedStep}
+            onStepChange={handleStepChange}
+          />
+        </div>
+
+        <div className="col-span-6 overflow-y-auto lg:col-span-3">
           {currentStep === 1 && (
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Step 1: Activity Name</h2>
@@ -49,7 +81,7 @@ const ActivityBuilder = () => {
                 }
               />
               <Button
-                onClick={() => setCurrentStep(2)}
+                onClick={() => goToNextStep(2)}
                 disabled={!activityData.name}
               >
                 Next
@@ -88,7 +120,7 @@ const ActivityBuilder = () => {
                   Back
                 </Button>
                 <Button
-                  onClick={() => setCurrentStep(3)}
+                  onClick={() => goToNextStep(3)}
                   disabled={!activityData.category}
                 >
                   Next
@@ -133,7 +165,7 @@ const ActivityBuilder = () => {
                   Back
                 </Button>
                 <Button
-                  onClick={() => setCurrentStep(4)}
+                  onClick={() => goToNextStep(4)}
                   disabled={!activityData.tier}
                 >
                   Next
@@ -156,7 +188,7 @@ const ActivityBuilder = () => {
                   maxLength={150}
                   rows={5}
                 />
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {activityData.description.length}/150 characters
                 </p>
               </div>
@@ -166,7 +198,7 @@ const ActivityBuilder = () => {
                   Back
                 </Button>
                 <Button
-                  onClick={() => setCurrentStep(5)}
+                  onClick={() => goToNextStep(5)}
                   disabled={!activityData.description}
                 >
                   Next
@@ -200,7 +232,7 @@ const ActivityBuilder = () => {
                 <Button variant="secondary" onClick={() => setCurrentStep(4)}>
                   Back
                 </Button>
-                <Button onClick={() => setCurrentStep(6)}>Next</Button>
+                <Button onClick={() => goToNextStep(6)}>Next</Button>
               </div>
             </div>
           )}
@@ -227,7 +259,7 @@ const ActivityBuilder = () => {
                 <Button variant="secondary" onClick={() => setCurrentStep(5)}>
                   Back
                 </Button>
-                <Button onClick={() => setCurrentStep(7)}>Next</Button>
+                <Button onClick={() => goToNextStep(7)}>Next</Button>
               </div>
             </div>
           )}
@@ -235,7 +267,7 @@ const ActivityBuilder = () => {
           {currentStep === 7 && (
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Step 7: Review</h2>
-              <div className="space-y-3 p-4 border rounded-lg">
+              <div className="p-4 space-y-3 border rounded-lg">
                 <div>
                   <span className="font-medium">Name:</span> {activityData.name}
                 </div>
@@ -268,6 +300,7 @@ const ActivityBuilder = () => {
                   onClick={() => {
                     alert("Activity Submitted!");
                     setCurrentStep(1);
+                    setMaxReachedStep(1);
                     setActivityData({
                       name: "",
                       category: "",
@@ -286,7 +319,7 @@ const ActivityBuilder = () => {
           )}
         </div>
 
-        <div className="sm:block hidden overflow-y-auto">
+        <div className="hidden col-span-2 overflow-y-auto lg:block">
           <div>My Activities</div>
           <ActivityCardList activities={[activityData, ...mockData]} />
         </div>
