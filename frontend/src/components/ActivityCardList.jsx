@@ -12,8 +12,8 @@ const ActivityCardList = ({ activities, onEdit, onDelete, showActions }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{
-              opacity: { duration: 0.3, delay: 0.1 * index },
-              scale: { duration: 0.3, delay: 0.1 * index },
+              opacity: { duration: 0.3, delay: 0.05 * index },
+              scale: { duration: 0.3, delay: 0.05 * index },
             }}
           >
             <ActivityCard
