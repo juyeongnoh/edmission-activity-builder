@@ -8,6 +8,7 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { calculateImpactScore } from "@/lib/calculateImpactScore";
 
 const ActivityCard = ({
   id,
@@ -21,6 +22,11 @@ const ActivityCard = ({
   onEdit,
   onDelete,
 }) => {
+  const impactScoreDisplay =
+    impactScore !== undefined
+      ? impactScore
+      : calculateImpactScore(tier, isLeadership, hoursPerWeek);
+
   return (
     <Card>
       <CardHeader>
@@ -58,7 +64,7 @@ const ActivityCard = ({
           </div>
           <div>
             <span className="text-muted-foreground">Impact:</span>
-            <span className="ml-2 font-medium">{impactScore}</span>
+            <span className="ml-2 font-medium">{impactScoreDisplay}</span>
           </div>
         </div>
       </CardContent>

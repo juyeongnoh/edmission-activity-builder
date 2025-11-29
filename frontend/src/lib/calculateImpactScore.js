@@ -1,4 +1,4 @@
-const calulateImpactScore = (tier, isLeadership, hours) => {
+const calculateImpactScore = (tier, isLeadership, hours) => {
   let score = 0;
 
   switch (tier) {
@@ -28,4 +28,4 @@ const calulateImpactScore = (tier, isLeadership, hours) => {
   return score;
 };
 
-export { calulateImpactScore };
+export { calculateImpactScore };

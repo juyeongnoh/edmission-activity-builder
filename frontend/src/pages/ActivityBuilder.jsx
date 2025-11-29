@@ -27,7 +27,6 @@ const ActivityBuilder = () => {
     description: "",
     hoursPerWeek: 0,
     isLeadership: false,
-    impactScore: 0,
   });
 
   const steps = [
