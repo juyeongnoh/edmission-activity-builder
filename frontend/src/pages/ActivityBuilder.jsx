@@ -3,22 +3,24 @@ import ActivityCardList from "../components/ActivityCardList";
 import SideNav from "../components/SideNav";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchActivities, createActivity } from "@/api/activities";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
+import Step1 from "@/components/steps/Step1";
+import Step2 from "@/components/steps/Step2";
+import Step3 from "@/components/steps/Step3";
+import Step4 from "@/components/steps/Step4";
+import Step5 from "@/components/steps/Step5";
+import Step6 from "@/components/steps/Step6";
+import Step7 from "@/components/steps/Step7";
+
+const stepAnimation = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 10 },
+  transition: { duration: 0.3 },
+};
 
 const ActivityBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -122,245 +124,87 @@ const ActivityBuilder = () => {
         </div>
 
         <div className="col-span-6 overflow-y-auto lg:col-span-3">
-          {currentStep === 1 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 1: Activity Name</h2>
-              <Input
-                placeholder="Activity Name"
-                value={activityData.name}
-                onChange={(e) =>
-                  setActivityData({ ...activityData, name: e.target.value })
-                }
-              />
-              <Button
-                onClick={() => goToNextStep(2)}
-                disabled={!activityData.name}
-              >
-                Next
-              </Button>
-            </div>
-          )}
-
-          {currentStep === 2 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 2: Category</h2>
-              <Select
-                onValueChange={(value) =>
-                  setActivityData({ ...activityData, category: value })
-                }
-                value={activityData.category}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="Sports">Sports</SelectItem>
-                    <SelectItem value="Arts">Arts</SelectItem>
-                    <SelectItem value="Academic">Academic</SelectItem>
-                    <SelectItem value="Community Service">
-                      Community Service
-                    </SelectItem>
-                    <SelectItem value="Leadership">Leadership</SelectItem>
-                    <SelectItem value="Others">Others</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(1)}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => goToNextStep(3)}
-                  disabled={!activityData.category}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {currentStep === 3 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 3: Tier</h2>
-              <RadioGroup
-                value={activityData.tier}
-                onValueChange={(value) =>
-                  setActivityData({ ...activityData, tier: value })
-                }
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="School" id="school" />
-                  <Label htmlFor="school">School</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Regional" id="regional" />
-                  <Label htmlFor="regional">Regional</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="State" id="state" />
-                  <Label htmlFor="state">State</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="National" id="national" />
-                  <Label htmlFor="national">National</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="International" id="international" />
-                  <Label htmlFor="international">International</Label>
-                </div>
-              </RadioGroup>
-
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(2)}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => goToNextStep(4)}
-                  disabled={!activityData.tier}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {currentStep === 4 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 4: Description</h2>
-              <div>
-                <Textarea
-                  placeholder="Describe your activity (max 150 characters)"
-                  value={activityData.description}
-                  onChange={(e) => {
-                    const value = e.target.value.slice(0, 150);
-                    setActivityData({ ...activityData, description: value });
-                  }}
-                  maxLength={150}
-                  rows={5}
+          <AnimatePresence mode="wait">
+            {currentStep === 1 && (
+              <motion.div key="step-1" {...stepAnimation} className="space-y-4">
+                <Step1
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  goToNextStep={goToNextStep}
                 />
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {activityData.description.length}/150 characters
-                </p>
-              </div>
+              </motion.div>
+            )}
 
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(3)}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => goToNextStep(5)}
-                  disabled={!activityData.description}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {currentStep === 5 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 5: Hours per Week</h2>
-              <div>
-                <Label htmlFor="hours">Hours per Week (0-40)</Label>
-                <Input
-                  id="hours"
-                  type="number"
-                  min="0"
-                  max="40"
-                  value={activityData.hoursPerWeek}
-                  onChange={(e) => {
-                    const value = Math.min(
-                      40,
-                      Math.max(0, Number(e.target.value))
-                    );
-                    setActivityData({ ...activityData, hoursPerWeek: value });
-                  }}
+            {currentStep === 2 && (
+              <motion.div key="step-2" {...stepAnimation} className="space-y-4">
+                <Step2
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  setCurrentStep={setCurrentStep}
+                  goToNextStep={goToNextStep}
                 />
-              </div>
+              </motion.div>
+            )}
 
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(4)}>
-                  Back
-                </Button>
-                <Button onClick={() => goToNextStep(6)}>Next</Button>
-              </div>
-            </div>
-          )}
-
-          {currentStep === 6 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">
-                Step 6: Leadership Position
-              </h2>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="leadership"
-                  checked={activityData.isLeadership}
-                  onCheckedChange={(checked) =>
-                    setActivityData({ ...activityData, isLeadership: checked })
-                  }
+            {currentStep === 3 && (
+              <motion.div key="step-3" {...stepAnimation} className="space-y-4">
+                <Step3
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  setCurrentStep={setCurrentStep}
+                  goToNextStep={goToNextStep}
                 />
-                <Label htmlFor="leadership">
-                  I held a leadership position in this activity
-                </Label>
-              </div>
+              </motion.div>
+            )}
 
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(5)}>
-                  Back
-                </Button>
-                <Button onClick={() => goToNextStep(7)}>Next</Button>
-              </div>
-            </div>
-          )}
+            {currentStep === 4 && (
+              <motion.div key="step-4" {...stepAnimation} className="space-y-4">
+                <Step4
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  setCurrentStep={setCurrentStep}
+                  goToNextStep={goToNextStep}
+                />
+              </motion.div>
+            )}
 
-          {currentStep === 7 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Step 7: Review</h2>
-              <div className="p-4 space-y-3 border rounded-lg">
-                <div>
-                  <span className="font-medium">Name:</span> {activityData.name}
-                </div>
-                <div>
-                  <span className="font-medium">Category:</span>{" "}
-                  {activityData.category}
-                </div>
-                <div>
-                  <span className="font-medium">Tier:</span> {activityData.tier}
-                </div>
-                <div>
-                  <span className="font-medium">Description:</span>{" "}
-                  {activityData.description}
-                </div>
-                <div>
-                  <span className="font-medium">Hours per Week:</span>{" "}
-                  {activityData.hoursPerWeek}
-                </div>
-                <div>
-                  <span className="font-medium">Leadership:</span>{" "}
-                  {activityData.isLeadership ? "Yes" : "No"}
-                </div>
-              </div>
+            {currentStep === 5 && (
+              <motion.div key="step-5" {...stepAnimation} className="space-y-4">
+                <Step5
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  setCurrentStep={setCurrentStep}
+                  goToNextStep={goToNextStep}
+                />
+              </motion.div>
+            )}
 
-              <div className="flex gap-2">
-                <Button variant="secondary" onClick={() => setCurrentStep(6)}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => {
+            {currentStep === 6 && (
+              <motion.div key="step-6" {...stepAnimation} className="space-y-4">
+                <Step6
+                  activityData={activityData}
+                  setActivityData={setActivityData}
+                  setCurrentStep={setCurrentStep}
+                  goToNextStep={goToNextStep}
+                />
+              </motion.div>
+            )}
+
+            {currentStep === 7 && (
+              <motion.div key="step-7" {...stepAnimation} className="space-y-4">
+                <Step7
+                  activityData={activityData}
+                  setCurrentStep={setCurrentStep}
+                  handleSubmit={() => {
                     handleSubmit();
                     setCurrentStep(1);
                     setMaxReachedStep(1);
                   }}
-                  disabled={createMutation.isPending}
-                >
-                  {createMutation.isPending ? "Submitting..." : "Submit"}
-                </Button>
-              </div>
-            </div>
-          )}
+                  isPending={createMutation.isPending}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div
