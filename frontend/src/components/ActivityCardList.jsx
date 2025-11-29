@@ -1,15 +1,15 @@
-import React from "react";
 import ActivityCard from "./ActivityCard";
 
-const ActivityCardList = ({ activities }) => {
+const ActivityCardList = ({ activities, onEdit, onDelete, showActions }) => {
   return (
     <div className="space-y-2">
       {activities.map((activity) => (
         <ActivityCard
           key={activity.id}
           {...activity}
-          onEdit={() => {}}
-          onDelete={() => {}}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          showActions={showActions}
         />
       ))}
     </div>

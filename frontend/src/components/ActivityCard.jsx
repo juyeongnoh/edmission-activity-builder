@@ -22,6 +22,7 @@ const ActivityCard = ({
   isLeadership,
   onEdit,
   onDelete,
+  showActions = true,
 }) => {
   const impactScore = calculateImpactScore(tier, isLeadership, hoursPerWeek);
 
@@ -49,24 +50,30 @@ const ActivityCard = ({
           <div className="absolute inset-y-0 right-0 w-8 pointer-events-none bg-linear-to-l from-card to-transparent" />
         </div>
 
-        <CardAction className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onEdit?.(id)}
-            aria-label={`Edit ${name}`}
-          >
-            <SquarePen size={16} />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onDelete?.(id)}
-            aria-label={`Delete ${name}`}
-          >
-            <Trash2 size={16} />
-          </Button>
-        </CardAction>
+        {showActions && (
+          <CardAction className="flex gap-1">
+            {onEdit && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onEdit(id)}
+                aria-label={`Edit ${name}`}
+              >
+                <SquarePen size={16} />
+              </Button>
+            )}
+            {onDelete && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onDelete(id)}
+                aria-label={`Delete ${name}`}
+              >
+                <Trash2 size={16} />
+              </Button>
+            )}
+          </CardAction>
+        )}
       </CardHeader>
 
       <CardContent className="flex flex-col flex-1 min-h-0">

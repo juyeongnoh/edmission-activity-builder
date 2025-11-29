@@ -7,6 +7,7 @@ import ActivityBuilder from "./pages/ActivityBuilder";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./providers/ProtectedRoute";
+import Activities from "./pages/Activities";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,6 +16,15 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/activities"
+          element={
+            <ProtectedRoute>
+              <Activities />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/activity-builder"
           element={

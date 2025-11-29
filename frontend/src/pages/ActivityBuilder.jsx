@@ -15,6 +15,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft, CircleArrowLeftIcon } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const ActivityBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -28,6 +30,7 @@ const ActivityBuilder = () => {
     hoursPerWeek: 0,
     isLeadership: false,
   });
+  const navigate = useNavigate();
 
   const steps = [
     { number: 1, label: "Activity Name" },
@@ -89,8 +92,13 @@ const ActivityBuilder = () => {
   }, []);
 
   return (
-    <div className="h-screen grid grid-rows-[auto_1fr] p-6 gap-6">
-      <h1 className="text-2xl font-bold">Activity Builder</h1>
+    <div className="h-screen grid grid-rows-[auto_1fr] p-6 gap-6 container mx-auto">
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => navigate("/activities")}>
+          <ChevronLeft />
+        </Button>
+        <h1 className="text-2xl font-bold">Activity Builder</h1>
+      </div>
 
       <div className="grid min-h-0 grid-cols-6 gap-8">
         <div className="hidden lg:block">

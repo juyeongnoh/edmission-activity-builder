@@ -15,7 +15,7 @@ const Home = () => {
 
           {isAuthenticated ? (
             <div className="flex gap-2">
-              <Button onClick={() => navigate("/activity-builder")}>
+              <Button onClick={() => navigate("/activities")}>
                 Go to Activity Builder
               </Button>
               <Button
