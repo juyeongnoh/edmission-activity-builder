@@ -31,17 +31,18 @@ const ActivityBuilder = () => {
     hoursPerWeek: 0,
     isLeadership: false,
   });
+  const hasStartedInput = activityData.name.length > 0;
+
   const navigate = useNavigate();
+
   const queryClient = useQueryClient();
+
   const activityListRef = useRef(null);
 
   const { data: activityList = [], isLoading } = useQuery({
     queryKey: ["activities"],
     queryFn: fetchActivities,
   });
-
-  // Derived state: user has started input if activity name is not empty
-  const hasStartedInput = activityData.name.length > 0;
 
   const createMutation = useMutation({
     mutationFn: createActivity,
@@ -78,6 +79,14 @@ const ActivityBuilder = () => {
     try {
       await createMutation.mutateAsync(dataWithOrder);
       alert("Activity created successfully!");
+      setActivityData({
+        name: "",
+        category: "",
+        tier: "",
+        description: "",
+        hoursPerWeek: 0,
+        isLeadership: false,
+      });
     } catch (error) {
       alert("Failed to create activity.");
     }
@@ -344,14 +353,6 @@ const ActivityBuilder = () => {
                     handleSubmit();
                     setCurrentStep(1);
                     setMaxReachedStep(1);
-                    setActivityData({
-                      name: "",
-                      category: "",
-                      tier: "",
-                      description: "",
-                      hoursPerWeek: 0,
-                      isLeadership: false,
-                    });
                   }}
                   disabled={createMutation.isPending}
                 >
