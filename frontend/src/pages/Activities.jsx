@@ -2,14 +2,32 @@ import ActivityCardList from "@/components/ActivityCardList";
 import EditActivityDialog from "@/components/EditActivityDialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchActivities, deleteActivity } from "@/api/activities";
 
 const Activities = () => {
-  const [activityList, setActivityList] = useState([]);
   const [editingActivity, setEditingActivity] = useState(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const {
+    data: activityList = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["activities"],
+    queryFn: fetchActivities,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteActivity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
 
   const handleEdit = (id) => {
     const activity = activityList.find((a) => a.id === id);
@@ -17,10 +35,8 @@ const Activities = () => {
     setIsEditDialogOpen(true);
   };
 
-  const handleSaveEdit = (updatedActivity) => {
-    setActivityList((prev) =>
-      prev.map((a) => (a.id === updatedActivity.id ? updatedActivity : a))
-    );
+  const handleSaveEdit = () => {
+    queryClient.invalidateQueries({ queryKey: ["activities"] });
   };
 
   const handleDelete = async (id) => {
@@ -30,35 +46,28 @@ const Activities = () => {
 
     if (!confirmed) return;
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/activities/${id}`,
-      {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      }
-    );
-
-    if (response.ok) {
-      setActivityList((prev) => prev.filter((a) => a.id !== id));
-    }
+    deleteMutation.mutate(id);
   };
 
-  useEffect(() => {
-    const fetchActivities = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/activities`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const { activities } = await response.json();
-      setActivityList(activities);
-    };
+  if (isLoading) {
+    return (
+      <div className="container h-screen p-6 mx-auto">
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-400">Loading activities...</p>
+        </div>
+      </div>
+    );
+  }
 
-    fetchActivities();
-  }, []);
+  if (isError) {
+    return (
+      <div className="container h-screen p-6 mx-auto">
+        <div className="flex items-center justify-center h-full">
+          <p className="text-red-400">Failed to load activities.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container h-screen p-6 mx-auto">

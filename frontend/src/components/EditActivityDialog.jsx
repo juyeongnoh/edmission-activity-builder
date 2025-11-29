@@ -21,6 +21,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { updateActivity } from "@/api/activities";
 
 const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
   const [formData, setFormData] = useState({
@@ -30,6 +32,17 @@ const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
     description: "",
     hoursPerWeek: 0,
     isLeadership: false,
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: updateActivity,
+    onSuccess: () => {
+      onSave();
+      onOpenChange(false);
+    },
+    onError: () => {
+      alert("Failed to update activity.");
+    },
   });
 
   // Reset form when dialog opens with new activity
@@ -46,28 +59,9 @@ const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
     }
   }, [open, activity]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/activities/${activity.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(formData),
-      }
-    );
-
-    if (response.ok) {
-      const { activity: updatedActivity } = await response.json();
-      onSave(updatedActivity);
-      onOpenChange(false);
-    } else {
-      alert("Failed to update activity.");
-    }
+    updateMutation.mutate({ id: activity.id, data: formData });
   };
 
   return (
@@ -201,10 +195,13 @@ const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
+              disabled={updateMutation.isPending}
             >
               Cancel
             </Button>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit" disabled={updateMutation.isPending}>
+              {updateMutation.isPending ? "Saving..." : "Save Changes"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

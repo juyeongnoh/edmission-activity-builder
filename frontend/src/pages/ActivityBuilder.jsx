@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ActivityCardList from "../components/ActivityCardList";
 import SideNav from "../components/SideNav";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchActivities, createActivity } from "@/api/activities";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +17,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronLeft, CircleArrowLeftIcon } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const ActivityBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [activityList, setActivityList] = useState([]);
   const [maxReachedStep, setMaxReachedStep] = useState(1);
   const [activityData, setActivityData] = useState({
     name: "",
@@ -31,6 +32,23 @@ const ActivityBuilder = () => {
     isLeadership: false,
   });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const activityListRef = useRef(null);
+
+  const { data: activityList = [], isLoading } = useQuery({
+    queryKey: ["activities"],
+    queryFn: fetchActivities,
+  });
+
+  // Derived state: user has started input if activity name is not empty
+  const hasStartedInput = activityData.name.length > 0;
+
+  const createMutation = useMutation({
+    mutationFn: createActivity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
 
   const steps = [
     { number: 1, label: "Activity Name" },
@@ -54,42 +72,26 @@ const ActivityBuilder = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/activities`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(activityData),
-      }
-    );
+    const order = activityList.length;
+    const dataWithOrder = { ...activityData, order };
 
-    if (response.status === 201) {
-      const { message } = await response.json();
-      alert(message);
-    } else {
-      const { message } = await response.json();
-      alert(message);
+    try {
+      await createMutation.mutateAsync(dataWithOrder);
+      alert("Activity created successfully!");
+    } catch (error) {
+      alert("Failed to create activity.");
     }
   };
 
+  // Scroll to bottom when preview card is added
   useEffect(() => {
-    const fetchActivities = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/activities`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const { activities } = await response.json();
-      setActivityList(activities);
-    };
-    fetchActivities();
-  }, []);
+    if (hasStartedInput && activityListRef.current) {
+      activityListRef.current.scrollTo({
+        top: activityListRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [hasStartedInput, activityData]);
 
   return (
     <div className="h-screen grid grid-rows-[auto_1fr] p-6 gap-6 container mx-auto">
@@ -340,7 +342,6 @@ const ActivityBuilder = () => {
                 <Button
                   onClick={() => {
                     handleSubmit();
-                    alert("Activity Submitted!");
                     setCurrentStep(1);
                     setMaxReachedStep(1);
                     setActivityData({
@@ -350,20 +351,46 @@ const ActivityBuilder = () => {
                       description: "",
                       hoursPerWeek: 0,
                       isLeadership: false,
-                      impactScore: 0,
                     });
                   }}
+                  disabled={createMutation.isPending}
                 >
-                  Submit
+                  {createMutation.isPending ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </div>
           )}
         </div>
 
-        <div className="hidden col-span-2 overflow-y-auto lg:block">
-          <div>My Activities</div>
-          <ActivityCardList activities={activityList} />
+        <div
+          className="hidden col-span-2 overflow-y-auto lg:block"
+          ref={activityListRef}
+        >
+          <div className="mb-4 font-semibold">My Activities</div>
+          {isLoading ? (
+            <p className="text-sm text-gray-400">Loading...</p>
+          ) : (
+            <ActivityCardList
+              activities={[
+                ...activityList,
+                ...(hasStartedInput
+                  ? [
+                      {
+                        id: "preview",
+                        name: activityData.name || "Untitled Activity",
+                        category: activityData.category || "Category not set",
+                        tier: activityData.tier || "Tier not set",
+                        description:
+                          activityData.description || "No description yet",
+                        hoursPerWeek: activityData.hoursPerWeek,
+                        isLeadership: activityData.isLeadership,
+                      },
+                    ]
+                  : []),
+              ]}
+              showActions={false}
+            />
+          )}
         </div>
       </div>
     </div>
