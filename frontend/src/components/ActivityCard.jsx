@@ -25,7 +25,11 @@ const ActivityCard = ({
     <Card>
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary">{category}</Badge>
+          <Badge variant="outline">{tier}</Badge>
+          {isLeadership && <Badge>Leadership</Badge>}
+        </div>
         <CardAction>
           <Button
             variant="ghost"
@@ -46,21 +50,15 @@ const ActivityCard = ({
         </CardAction>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{category}</Badge>
-            <Badge variant="outline">{tier}</Badge>
-            {isLeadership && <Badge>Leadership</Badge>}
+        <CardDescription className="mb-4">{description}</CardDescription>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <span className="text-muted-foreground">Hours/Week:</span>
+            <span className="ml-2 font-medium">{hoursPerWeek}</span>
           </div>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <span className="text-muted-foreground">Hours/Week:</span>
-              <span className="ml-2 font-medium">{hoursPerWeek}</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground">Impact:</span>
-              <span className="ml-2 font-medium">{impactScore}</span>
-            </div>
+          <div>
+            <span className="text-muted-foreground">Impact:</span>
+            <span className="ml-2 font-medium">{impactScore}</span>
           </div>
         </div>
       </CardContent>
