@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const activityRoutes = require("./routes/activity.routes");
@@ -6,6 +7,12 @@ const activityRoutes = require("./routes/activity.routes");
 const app = express();
 
 // Middleware
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Vite default port
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
