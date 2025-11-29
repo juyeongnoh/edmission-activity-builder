@@ -3,7 +3,7 @@ import ActivityCard from "./ActivityCard";
 
 const ActivityCardList = ({ activities }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-2">
       {activities.map((activity) => (
         <ActivityCard
           key={activity.id}
