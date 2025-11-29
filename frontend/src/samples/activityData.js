@@ -1,6 +1,6 @@
 const activityData = [
   {
-    activityName: "School Debate Team Captain and Coordinator",
+    name: "School Debate Team Captain and Coordinator",
     category: "Leadership",
     tier: "School",
     description:
@@ -9,7 +9,7 @@ const activityData = [
     isLeadership: true,
   },
   {
-    activityName: "Volunteering at Local Animal Shelter",
+    name: "Volunteering at Local Animal Shelter",
     category: "Community Service",
     tier: "Regional",
     description:
@@ -18,7 +18,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "National High School Robotics Competition",
+    name: "National High School Robotics Competition",
     category: "Academic",
     tier: "National",
     description:
@@ -27,7 +27,7 @@ const activityData = [
     isLeadership: true,
   },
   {
-    activityName: "Varsity Soccer Midfielder",
+    name: "Varsity Soccer Midfielder",
     category: "Sports",
     tier: "State",
     description:
@@ -36,7 +36,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "Private Piano Lessons and Recitals",
+    name: "Private Piano Lessons and Recitals",
     category: "Arts",
     tier: "Others", // Tier may be "Others" if not a formal competition tier
     description:
@@ -45,7 +45,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "Summer Internship at a Tech Startup",
+    name: "Summer Internship at a Tech Startup",
     category: "Others",
     tier: "Regional",
     description:
@@ -54,7 +54,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "Model United Nations Delegate",
+    name: "Model United Nations Delegate",
     category: "Academic",
     tier: "International",
     description:
@@ -63,7 +63,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "School Newspaper Editor-in-Chief",
+    name: "School Newspaper Editor-in-Chief",
     category: "Leadership",
     tier: "School",
     description:
@@ -72,7 +72,7 @@ const activityData = [
     isLeadership: true,
   },
   {
-    activityName: "Competitive Swimming Training",
+    name: "Competitive Swimming Training",
     category: "Sports",
     tier: "State",
     description:
@@ -81,7 +81,7 @@ const activityData = [
     isLeadership: false,
   },
   {
-    activityName: "Local Community Mural Project Organizer",
+    name: "Local Community Mural Project Organizer",
     category: "Arts",
     tier: "Regional",
     description:
