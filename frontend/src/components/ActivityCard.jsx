@@ -20,14 +20,10 @@ const ActivityCard = ({
   description,
   hoursPerWeek,
   isLeadership,
-  impactScore,
   onEdit,
   onDelete,
 }) => {
-  const impactScoreDisplay =
-    impactScore !== undefined
-      ? impactScore
-      : calculateImpactScore(tier, isLeadership, hoursPerWeek);
+  const impactScore = calculateImpactScore(tier, isLeadership, hoursPerWeek);
 
   return (
     <Card className="flex flex-col h-56">
@@ -86,7 +82,7 @@ const ActivityCard = ({
           <div>
             <span className="text-muted-foreground">Impact:</span>
             <span className="ml-2 font-medium">
-              <ImpactScoreBadge impactScore={impactScoreDisplay} />
+              <ImpactScoreBadge impactScore={impactScore} />
             </span>
           </div>
         </div>
