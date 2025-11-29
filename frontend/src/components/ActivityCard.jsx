@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { calculateImpactScore } from "@/lib/calculateImpactScore";
 import { SquarePen, Trash2 } from "lucide-react";
+import ImpactScoreBadge from "./ImpactScoreBadge";
 
 const ActivityCard = ({
   id,
@@ -84,7 +85,9 @@ const ActivityCard = ({
           </div>
           <div>
             <span className="text-muted-foreground">Impact:</span>
-            <span className="ml-2 font-medium">{impactScoreDisplay}</span>
+            <span className="ml-2 font-medium">
+              <ImpactScoreBadge impactScore={impactScoreDisplay} />
+            </span>
           </div>
         </div>
       </CardContent>
