@@ -39,28 +39,47 @@ const Register = () => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleRegister();
-      }}
-    >
-      <h1>Register</h1>
-      <Input
-        type="email"
-        value={email}
-        onChange={handleEmailChange}
-        placeholder="Email"
-      />
-      <Input
-        type="password"
-        value={password}
-        onChange={handlePasswordChange}
-        placeholder="Password"
-      />
+    <div className="flex items-center justify-center w-screen h-screen">
+      <div className="border shadow-lg rounded-xl bg-linear-120 from-sky-950 to-sky-500">
+        <div className="flex flex-col items-center justify-between p-24">
+          <h1 className="mb-8 text-3xl font-bold text-white">Register</h1>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleRegister();
+            }}
+            className="flex flex-col w-full gap-4"
+          >
+            <Input
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="Email"
+              required
+            />
+            <Input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="Password"
+              required
+            />
 
-      <Button variant="primary">Register</Button>
-    </form>
+            <Button type="submit" className="w-full">
+              Register
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate("/login")}
+              className="w-full"
+            >
+              Back to Login
+            </Button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
