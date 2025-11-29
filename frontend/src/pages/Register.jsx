@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/auth/login`,
+      `${import.meta.env.VITE_API_URL}/api/auth/register`,
       {
         method: "POST",
         headers: {
@@ -28,10 +28,10 @@ const Login = () => {
       }
     );
 
-    if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
-      navigate("/");
+    if (response.status === 201) {
+      const { message } = await response.json();
+      alert(message);
+      navigate("/login");
     } else {
       const { message } = await response.json();
       alert(message);
@@ -42,10 +42,10 @@ const Login = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleLogin();
+        handleRegister();
       }}
     >
-      <h1>Login</h1>
+      <h1>Register</h1>
       <Input
         type="email"
         value={email}
@@ -59,9 +59,9 @@ const Login = () => {
         placeholder="Password"
       />
 
-      <Button variant="primary">Login</Button>
+      <Button variant="primary">Register</Button>
     </form>
   );
 };
 
-export default Login;
+export default Register;
