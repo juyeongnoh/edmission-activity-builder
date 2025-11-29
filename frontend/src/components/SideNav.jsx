@@ -2,7 +2,7 @@ import SideNavItem from "./SideNavItem";
 
 const SideNav = ({ steps, currentStep, maxReachedStep, onStepChange }) => {
   return (
-    <nav className="space-y-2">
+    <nav className="flex justify-between lg:space-y-2 lg:block">
       {steps.map((step) => (
         <SideNavItem
           key={step.number}

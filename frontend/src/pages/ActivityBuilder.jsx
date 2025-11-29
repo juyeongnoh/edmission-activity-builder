@@ -113,8 +113,8 @@ const ActivityBuilder = () => {
         <h1 className="text-2xl font-bold">Activity Builder</h1>
       </div>
 
-      <div className="grid min-h-0 grid-cols-6 gap-8">
-        <div className="hidden lg:block">
+      <div className="flex flex-col min-h-0 grid-cols-8 gap-8 lg:grid">
+        <div className="col-span-6 mb-4 lg:col-span-2 lg:mb-0">
           <SideNav
             steps={steps}
             currentStep={currentStep}
@@ -208,7 +208,7 @@ const ActivityBuilder = () => {
         </div>
 
         <div
-          className="hidden col-span-2 overflow-y-auto lg:block"
+          className="hidden col-span-3 overflow-y-auto lg:block"
           ref={activityListRef}
         >
           <div className="mb-4 font-semibold">My Activities</div>

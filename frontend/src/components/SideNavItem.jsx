@@ -9,7 +9,7 @@ const SideNavItem = ({
     <button
       onClick={onClick}
       disabled={!isAccessible}
-      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+      className={`lg:w-full text-left lg:px-4 lg:py-2 rounded-lg transition-colors p-2 ${
         isActive
           ? "bg-primary text-primary-foreground"
           : isCompleted
@@ -31,7 +31,9 @@ const SideNavItem = ({
         >
           {step.number}
         </span>
-        <span className="text-sm font-medium">{step.label}</span>
+        <span className="hidden text-sm font-medium lg:block">
+          {step.label}
+        </span>
       </div>
     </button>
   );
