@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ActivityCardList from "../components/ActivityCardList";
 import SideNav from "../components/SideNav";
-import mockData from "@/samples/activityData";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const ActivityBuilder = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [activityList, setActivityList] = useState([]);
   const [maxReachedStep, setMaxReachedStep] = useState(1);
   const [activityData, setActivityData] = useState({
     name: "",
@@ -50,9 +50,43 @@ const ActivityBuilder = () => {
     setMaxReachedStep(Math.max(maxReachedStep, nextStep));
   };
 
+  const handleSubmit = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/activities`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(activityData),
+      }
+    );
+
+    if (response.status === 201) {
+      const { message } = await response.json();
+      alert(message);
+    } else {
+      const { message } = await response.json();
+      alert(message);
+    }
+  };
+
   useEffect(() => {
-    console.log("Activity Data Updated:", activityData);
-  }, [activityData]);
+    const fetchActivities = async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/activities`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const { activities } = await response.json();
+      setActivityList(activities);
+    };
+    fetchActivities();
+  }, []);
 
   return (
     <div className="h-screen grid grid-rows-[auto_1fr] p-6 gap-6">
@@ -297,6 +331,7 @@ const ActivityBuilder = () => {
                 </Button>
                 <Button
                   onClick={() => {
+                    handleSubmit();
                     alert("Activity Submitted!");
                     setCurrentStep(1);
                     setMaxReachedStep(1);
@@ -320,7 +355,7 @@ const ActivityBuilder = () => {
 
         <div className="hidden col-span-2 overflow-y-auto lg:block">
           <div>My Activities</div>
-          <ActivityCardList activities={[activityData, ...mockData]} />
+          <ActivityCardList activities={activityList} />
         </div>
       </div>
     </div>

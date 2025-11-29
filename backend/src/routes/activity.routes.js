@@ -13,9 +13,9 @@ const router = express.Router();
 // All routes require authentication
 router.use(authenticateToken);
 
-router.get("/activities", getAllActivities);
-router.get("/activities/:id", getActivity);
-router.post("/activities", createActivity);
-router.put("/activities/:id", updateActivity);
-router.delete("/activities/:id", deleteActivity);
+router.get("/", getAllActivities);
+router.get("/:id", getActivity);
+router.post("/", createActivity);
+router.put("/:id", updateActivity);
+router.delete("/:id", deleteActivity);
 module.exports = router;
