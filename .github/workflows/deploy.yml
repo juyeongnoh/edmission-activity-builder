@@ -22,7 +22,7 @@ jobs:
       - name: Create .env file for frontend
         working-directory: ./frontend
         run: |
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env.production
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
 
       - name: Install dependencies
         working-directory: ./frontend
@@ -44,6 +44,7 @@ jobs:
           SOURCE_DIR: "frontend/dist"
 
       - name: Invalidate CloudFront Cache
+        if: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID != '' }}
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
@@ -53,7 +54,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   deploy-backend:
-    name: Deploy Backend (Optional - Add your backend deployment strategy)
+    name: Deploy Backend to EC2
     runs-on: ubuntu-latest
     needs: deploy-frontend
 
@@ -61,11 +62,16 @@ jobs:
       - name: Checkout codes
         uses: actions/checkout@v4
 
-      - name: Backend deployment placeholder
-        run: |
-          echo "Backend deployment not configured yet"
-          echo "Options:"
-          echo "  - Deploy to EC2 using SSH"
-          echo "  - Deploy to Elastic Beanstalk"
-          echo "  - Deploy to Lambda with API Gateway"
-          echo "  - Deploy to ECS/Fargate"
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/edmission-activity-builder
+            git pull origin main
+            cd backend
+            npm install --production
+            pm2 restart edmission-backend || pm2 start ecosystem.config.js
+            pm2 save
