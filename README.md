@@ -58,9 +58,9 @@ $ npm run start
 
 ## 백엔드 설계
 
-- [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/docs/API.md)
+- [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/API.md)
 
-- [ERD 문서](https://github.com/juyeongnoh/edmission-activity-builder/docs/ERD.md)
+- [ERD 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/ERD.md)
 
 ## 앱 스크린샷
 
