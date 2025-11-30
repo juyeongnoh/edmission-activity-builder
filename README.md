@@ -1,10 +1,10 @@
 # Edmission Activity Builder
 
-Edmission Unni의 Activity Builder를 재현한 웹사이트입니다.
+Edmission Unni의 Activity Builder를 구현한 웹사이트입니다.
 
 > [!NOTE]
 >
-> - [추가 제안 기능](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/NEW_FEATURES.md)
+> - [추가 제안 기능 목록](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/NEW_FEATURES.md)
 > - [버그 목록](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/BUGS.md)
 > - [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/API.md)
 > - [ERD 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/ERD.md)
@@ -44,7 +44,17 @@ $ touch .env # 이메일로 전송한 백엔드 env 붙여넣기
 $ npm run start
 ```
 
-### 프론트엔드 주요 라이브러리
+### 프론트엔드 기술 스택
+
+| 이름                  | 버전     | 비고           |
+| --------------------- | -------- | -------------- |
+| react                 | 19.2.0   | UI 라이브러리  |
+| tailwindcss           | 4.1.17   | CSS 프레임워크 |
+| motion                | 12.23.24 | 애니메이션     |
+| react-router          | 7.9.6    | 라우팅         |
+| @tanstack/react-query | 5.90.11  | 서버 상태 관리 |
+
+### 백엔드 기술 스택
 
 | 이름         | 버전   | 비고              |
 | ------------ | ------ | ----------------- |
@@ -53,17 +63,6 @@ $ npm run start
 | sequelize    | 6.37.7 | ORM               |
 | bcrypt       | 6.0.0  | 패스워드 암호화   |
 | jsonwebtoken | 9.0.2  | 회원 토큰 생성    |
-
-### 백엔드 주요 라이브러리
-
-| 이름                  | 버전     | 비고           |
-| --------------------- | -------- | -------------- |
-| react                 | 19.2.0   | UI 라이브러리  |
-| tailwindcss           | 4.1.17   | CSS 프레임워크 |
-| motion                | 12.23.24 | 애니메이션     |
-| @tanstack/react-query | 5.90.11  | 서버 상태 관리 |
-
-## 백엔드 설계
 
 ## 앱 스크린샷
 
@@ -78,7 +77,3 @@ $ npm run start
 ### Activity Builder
 
 ![Image](https://github.com/user-attachments/assets/bf03170a-71ba-44df-9bf9-00eda420f53a)
-
-- Edmission에서 찾은 버그
-- 추가 제안 기능
-- Answers to Follow-Up Questions
