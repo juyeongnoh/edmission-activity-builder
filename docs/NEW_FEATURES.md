@@ -1,6 +1,12 @@
 # 추가 제안 기능
 
-## 체크리스트 <-> Notion DB 동기화
+저는 EdMission Unni와 다른 플랫폼과의 통합 기능을 구상해봤습니다.
+
+최근 학생들은 학업에서 Notion, Slack과 같은 다양한 도구를 동시에 사용하고 있습니다. 이러한 환경은 데이터가 여러 플랫폼에 흩어져 있어 일관된 관리가 어렵고, 플랫폼 간 잦은 이동으로 인해 집중력이 저하될 우려가 있습니다.
+
+학생들에게 이미 익숙한 도구들과 EdMission을 연동해 데이터를 동기화하여, 학생들이 기존의 환경을 유지하면서도 EdMission의 기능을 온전히 활용하고 일관성 있는 데이터 관리를 가능하도록 하고자 했습니다.
+
+## 1. 체크리스트 <-> Notion DB 동기화
 
 ![Image](https://github.com/user-attachments/assets/d83b0a42-5d5b-4138-a3d3-e9db6e2438eb)
 
@@ -17,7 +23,7 @@
 - 학생들이 이미 익숙한 Notion 환경에서도 체크리스트를 관리할 수 있어 편의성 향상
 - 기존 워크플로우를 방해하지 않고 EdMission을 자연스럽게 통합할 수 있어 사용자 유지율 증가
 
-## Slack을 통한 입시 일정 D-day 알림
+## 2. Slack을 통한 입시 일정 D-day 알림
 
 ![Image](https://github.com/user-attachments/assets/25b3baa7-3ff9-452e-8ec2-add8dcb12326)
 
