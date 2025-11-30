@@ -1,14 +1,15 @@
+import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import Home from "./pages/Home";
-import ActivityBuilder from "./pages/ActivityBuilder";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ProtectedRoute from "./providers/ProtectedRoute";
-import Activities from "./pages/Activities";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import Activities from "./pages/Activities";
+import ActivityBuilder from "./pages/ActivityBuilder";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ProtectedRoute from "./providers/ProtectedRoute";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 window.__TANSTACK_QUERY_CLIENT__ = queryClient;

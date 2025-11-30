@@ -1,10 +1,12 @@
-import ActivityCardList from "@/components/ActivityCardList";
-import EditActivityDialog from "@/components/EditActivityDialog";
-import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+import ActivityCardList from "@/components/ActivityCardList";
+import { Button } from "@/components/ui/button";
+import EditActivityDialog from "@/components/EditActivityDialog";
+
 import { fetchActivities, deleteActivity } from "@/api/activities";
 
 const Activities = () => {

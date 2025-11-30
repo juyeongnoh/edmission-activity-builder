@@ -1,12 +1,12 @@
-import { useEffect, useState, useRef } from "react";
-import ActivityCardList from "../components/ActivityCardList";
-import SideNav from "../components/SideNav";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchActivities, createActivity } from "@/api/activities";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { motion, AnimatePresence } from "motion/react";
+
+import ActivityCardList from "@/components/ActivityCardList";
+import { Button } from "@/components/ui/button";
+import SideNav from "@/components/SideNav";
 import Step1 from "@/components/steps/Step1";
 import Step2 from "@/components/steps/Step2";
 import Step3 from "@/components/steps/Step3";
@@ -14,6 +14,8 @@ import Step4 from "@/components/steps/Step4";
 import Step5 from "@/components/steps/Step5";
 import Step6 from "@/components/steps/Step6";
 import Step7 from "@/components/steps/Step7";
+
+import { fetchActivities, createActivity } from "@/api/activities";
 
 const stepAnimation = {
   initial: { opacity: 0, y: 10 },

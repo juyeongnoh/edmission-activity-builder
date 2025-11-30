@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import ActivityCard from "./ActivityCard";
+
+import ActivityCard from "@/components/ActivityCard";
 
 const ActivityCardList = ({ activities, onEdit, onDelete, showActions }) => {
   return (

@@ -1,4 +1,4 @@
-import SideNavItem from "./SideNavItem";
+import SideNavItem from "@/components/SideNavItem";
 
 const SideNav = ({ steps, currentStep, maxReachedStep, onStepChange }) => {
   return (

@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
 
 const Register = () => {
   const [email, setEmail] = useState("");

@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -17,11 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { Textarea } from "@/components/ui/textarea";
+
 import { updateActivity } from "@/api/activities";
 
 const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
@@ -45,7 +47,6 @@ const EditActivityDialog = ({ open, onOpenChange, activity, onSave }) => {
     },
   });
 
-  // Reset form when dialog opens with new activity
   useEffect(() => {
     if (open && activity) {
       setFormData({

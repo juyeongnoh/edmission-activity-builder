@@ -1,3 +1,9 @@
+import { SquarePen, Trash2 } from "lucide-react";
+import { memo } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { calculateImpactScore } from "@/lib/calculateImpactScore";
 import {
   Card,
   CardAction,
@@ -5,13 +11,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { calculateImpactScore } from "@/lib/calculateImpactScore";
-import { SquarePen, Trash2 } from "lucide-react";
-import ImpactScoreBadge from "./ImpactScoreBadge";
-import { memo } from "react";
+} from "@/components/ui/card";
+import ImpactScoreBadge from "@/components/ImpactScoreBadge";
 
 const ActivityCard = memo(
   ({
