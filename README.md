@@ -2,6 +2,13 @@
 
 Edmission Unni의 Activity Builder를 재현한 웹사이트입니다.
 
+> [!NOTE]
+
+> - [추가 제안 기능](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/NEW_FEATURES.md)
+> - [버그 목록](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/BUGS.md)
+> - [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/API.md)
+> - [ERD 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/ERD.md)
+
 ## 구현된 기능
 
 - 회원 기능 (Access Token 기반)
@@ -57,10 +64,6 @@ $ npm run start
 | @tanstack/react-query | 5.90.11  | 서버 상태 관리 |
 
 ## 백엔드 설계
-
-- [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/API.md)
-
-- [ERD 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/ERD.md)
 
 ## 앱 스크린샷
 
