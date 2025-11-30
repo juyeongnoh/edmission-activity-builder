@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@test.com");
+  const [password, setPassword] = useState("password");
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
