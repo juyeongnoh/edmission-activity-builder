@@ -9,7 +9,7 @@ const SideNavItem = ({
     <button
       onClick={onClick}
       disabled={!isAccessible}
-      className={`lg:w-full text-left lg:px-4 lg:py-2 rounded-lg transition-colors p-2 ${
+      className={`lg:w-full text-left lg:px-4 lg:py-2 rounded-lg transition-colors p-2 cursor-pointer disabled:cursor-not-allowed ${
         isActive
           ? "bg-primary text-primary-foreground"
           : isCompleted
