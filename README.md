@@ -64,6 +64,18 @@ $ npm run start
 
 ## 앱 스크린샷
 
+### 로그인/회원가입
+
+![Image](https://github.com/user-attachments/assets/3e79aafb-0949-400a-acea-e35281e06cc4)
+
+### Activity 목록
+
+![Image](https://github.com/user-attachments/assets/e636a287-f898-4320-b3b8-f6430b01c9ec)
+
+### Activity Builder
+
+![Image](https://github.com/user-attachments/assets/bf03170a-71ba-44df-9bf9-00eda420f53a)
+
 - Edmission에서 찾은 버그
 - 추가 제안 기능
 - Answers to Follow-Up Questions
