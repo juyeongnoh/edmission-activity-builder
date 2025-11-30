@@ -3,7 +3,7 @@
 Edmission Unni의 Activity Builder를 재현한 웹사이트입니다.
 
 > [!NOTE]
-
+>
 > - [추가 제안 기능](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/NEW_FEATURES.md)
 > - [버그 목록](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/BUGS.md)
 > - [API 문서](https://github.com/juyeongnoh/edmission-activity-builder/blob/main/docs/API.md)
