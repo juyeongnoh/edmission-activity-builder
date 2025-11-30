@@ -18,17 +18,30 @@ const Step6 = ({
           onCheckedChange={(checked) =>
             setActivityData({ ...activityData, isLeadership: checked })
           }
+          aria-describedby="leadership-hint"
         />
         <Label htmlFor="leadership">
           I held a leadership position in this activity
         </Label>
       </div>
+      <p id="leadership-hint" className="text-sm text-muted-foreground mt-2">
+        e.g., President, Captain, Director, Team Lead
+      </p>
 
       <div className="flex gap-2">
-        <Button variant="secondary" onClick={() => setCurrentStep(5)}>
+        <Button
+          variant="secondary"
+          onClick={() => setCurrentStep(5)}
+          aria-label="Go back to step 5: Hours per week"
+        >
           Back
         </Button>
-        <Button onClick={() => goToNextStep(7)}>Next</Button>
+        <Button
+          onClick={() => goToNextStep(7)}
+          aria-label="Continue to step 7: Review your activity"
+        >
+          Next
+        </Button>
       </div>
     </>
   );

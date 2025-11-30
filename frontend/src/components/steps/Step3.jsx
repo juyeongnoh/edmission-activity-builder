@@ -16,6 +16,8 @@ const Step3 = ({
         onValueChange={(value) =>
           setActivityData({ ...activityData, tier: value })
         }
+        required
+        aria-required="true"
       >
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="School" id="school" />
@@ -40,10 +42,18 @@ const Step3 = ({
       </RadioGroup>
 
       <div className="flex gap-2">
-        <Button variant="secondary" onClick={() => setCurrentStep(2)}>
+        <Button
+          variant="secondary"
+          onClick={() => setCurrentStep(2)}
+          aria-label="Go back to step 2: Category"
+        >
           Back
         </Button>
-        <Button onClick={() => goToNextStep(4)} disabled={!activityData.tier}>
+        <Button
+          onClick={() => goToNextStep(4)}
+          disabled={!activityData.tier}
+          aria-label="Continue to step 4: Description"
+        >
           Next
         </Button>
       </div>
