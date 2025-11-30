@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import useAuth from "@/hooks/useAuth";
 
 const Login = () => {
-  const [email, setEmail] = useState("test@test.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
