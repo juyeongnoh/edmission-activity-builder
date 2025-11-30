@@ -1,31 +1,17 @@
+const Tier = {
+  School: 1,
+  Regional: 2,
+  State: 3,
+  National: 4,
+  International: 5,
+};
+
 const calculateImpactScore = (tier, isLeadership, hours) => {
-  let score = 0;
+  const tierScore = Tier[tier] || 0;
+  const leadershipScore = isLeadership ? 2 : 0;
+  const hoursScore = hours > 10 ? 1 : 0;
 
-  switch (tier) {
-    case "School":
-      score += 1;
-      break;
-    case "Regional":
-      score += 2;
-      break;
-    case "State":
-      score += 3;
-      break;
-    case "National":
-      score += 4;
-      break;
-    case "International":
-      score += 5;
-      break;
-    default:
-      break;
-  }
-
-  if (isLeadership) score += 2;
-
-  if (hours > 10) score += 1;
-
-  return score;
+  return tierScore + leadershipScore + hoursScore;
 };
 
 export { calculateImpactScore };
