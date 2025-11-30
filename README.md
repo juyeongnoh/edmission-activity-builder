@@ -23,25 +23,32 @@ Edmission Unni의 Activity Builder를 구현한 웹사이트입니다.
 
 ## 개발 환경 세팅
 
-개발 환경을 준비하기 위해서는 Node가 필요합니다. 메일에 첨부한 .env 데이터를 각각의 디렉터리에 복사해주세요.
+개발 환경을 준비하기 위해서는 Node.js가 필요합니다.
 
 ```bash
 # 저장소 클론
-$ git clone https://github.com/juyeongnoh/edmission-activity-builder
-$ cd edmission-activity-builder
+git clone https://github.com/juyeongnoh/edmission-activity-builder
+cd edmission-activity-builder
+```
 
-# 프론트엔드 환경 설정
-$ cd frontend
-$ npm i
-$ touch .env # 이메일로 전송한 프론트엔드 env 붙여넣기
-$ npm run dev
-$ cd ..
+### 터미널 1 - 백엔드 실행
 
-# 백엔드 환경 설정
-$ cd backend
-$ npm i
-$ touch .env # 이메일로 전송한 백엔드 env 붙여넣기
-$ npm run start
+```bash
+cd backend
+npm install
+echo "JWT_SECRET=$(node -e 'console.log(require("crypto").randomBytes(64).toString("hex"))')" > .env
+echo "PORT=3000" >> .env
+echo "NODE_ENV=development" >> .env
+npm run start
+```
+
+### 터미널 2 - 프론트엔드 실행
+
+```bash
+cd frontend
+npm install
+echo "VITE_API_URL=http://localhost:3000" > .env
+npm run dev
 ```
 
 ### 프론트엔드 기술 스택
