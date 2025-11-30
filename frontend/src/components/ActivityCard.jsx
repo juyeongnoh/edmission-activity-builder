@@ -11,91 +11,94 @@ import { Badge } from "./ui/badge";
 import { calculateImpactScore } from "@/lib/calculateImpactScore";
 import { SquarePen, Trash2 } from "lucide-react";
 import ImpactScoreBadge from "./ImpactScoreBadge";
+import { memo } from "react";
 
-const ActivityCard = ({
-  id,
-  name,
-  category,
-  tier,
-  description,
-  hoursPerWeek,
-  isLeadership,
-  onEdit,
-  onDelete,
-  showActions = true,
-}) => {
-  const impactScore = calculateImpactScore(tier, isLeadership, hoursPerWeek);
+const ActivityCard = memo(
+  ({
+    id,
+    name,
+    category,
+    tier,
+    description,
+    hoursPerWeek,
+    isLeadership,
+    onEdit,
+    onDelete,
+    showActions = true,
+  }) => {
+    const impactScore = calculateImpactScore(tier, isLeadership, hoursPerWeek);
 
-  return (
-    <Card className="flex flex-col h-56">
-      <CardHeader className="shrink-0">
-        <CardTitle className="truncate" title={name}>
-          {name ? name : "Activity Name"}
-        </CardTitle>
+    return (
+      <Card className="flex flex-col h-56">
+        <CardHeader className="shrink-0">
+          <CardTitle className="truncate" title={name}>
+            {name ? name : "Activity Name"}
+          </CardTitle>
 
-        <div className="relative overflow-hidden">
-          <div className="flex gap-2 overflow-x-hidden">
-            {category && (
-              <Badge variant="secondary" className="shrink-0">
-                {category}
-              </Badge>
-            )}
-            {tier && (
-              <Badge variant="outline" className="shrink-0">
-                {tier}
-              </Badge>
-            )}
-            {isLeadership && <Badge className="shrink-0">Leadership</Badge>}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-2 overflow-x-hidden">
+              {category && (
+                <Badge variant="secondary" className="shrink-0">
+                  {category}
+                </Badge>
+              )}
+              {tier && (
+                <Badge variant="outline" className="shrink-0">
+                  {tier}
+                </Badge>
+              )}
+              {isLeadership && <Badge className="shrink-0">Leadership</Badge>}
+            </div>
+            <div className="absolute inset-y-0 right-0 w-8 pointer-events-none bg-linear-to-l from-card to-transparent" />
           </div>
-          <div className="absolute inset-y-0 right-0 w-8 pointer-events-none bg-linear-to-l from-card to-transparent" />
-        </div>
 
-        {showActions && (
-          <CardAction className="flex gap-1">
-            {onEdit && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onEdit(id)}
-                aria-label={`Edit ${name}`}
-              >
-                <SquarePen size={16} />
-              </Button>
-            )}
-            {onDelete && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onDelete(id)}
-                aria-label={`Delete ${name}`}
-              >
-                <Trash2 size={16} />
-              </Button>
-            )}
-          </CardAction>
-        )}
-      </CardHeader>
+          {showActions && (
+            <CardAction className="flex gap-1">
+              {onEdit && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onEdit(id)}
+                  aria-label={`Edit ${name}`}
+                >
+                  <SquarePen size={16} />
+                </Button>
+              )}
+              {onDelete && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onDelete(id)}
+                  aria-label={`Delete ${name}`}
+                >
+                  <Trash2 size={16} />
+                </Button>
+              )}
+            </CardAction>
+          )}
+        </CardHeader>
 
-      <CardContent className="flex flex-col flex-1 min-h-0">
-        <CardDescription className="mb-4 line-clamp-3" title={description}>
-          {description ? description : "Activity Description"}
-        </CardDescription>
+        <CardContent className="flex flex-col flex-1 min-h-0">
+          <CardDescription className="mb-4 line-clamp-3" title={description}>
+            {description ? description : "Activity Description"}
+          </CardDescription>
 
-        <div className="grid grid-cols-2 gap-2 mt-auto text-sm">
-          <div>
-            <span className="text-muted-foreground">Hours/Week:</span>
-            <span className="ml-2 font-medium">{hoursPerWeek}</span>
+          <div className="grid grid-cols-2 gap-2 mt-auto text-sm">
+            <div>
+              <span className="text-muted-foreground">Hours/Week:</span>
+              <span className="ml-2 font-medium">{hoursPerWeek}</span>
+            </div>
+            <div>
+              <span className="text-muted-foreground">Impact:</span>
+              <span className="ml-2 font-medium">
+                <ImpactScoreBadge impactScore={impactScore} />
+              </span>
+            </div>
           </div>
-          <div>
-            <span className="text-muted-foreground">Impact:</span>
-            <span className="ml-2 font-medium">
-              <ImpactScoreBadge impactScore={impactScore} />
-            </span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
+        </CardContent>
+      </Card>
+    );
+  }
+);
 
 export default ActivityCard;
