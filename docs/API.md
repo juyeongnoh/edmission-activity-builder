@@ -191,9 +191,9 @@ Authorization: Bearer <your_jwt_token>
 }
 ```
 
-**Notes:**
+**참고사항:**
 
-- Activities are sorted by the `order` field in ascending order
+- Activity 목록은 order 필드 값에 따라 오름차순으로 정렬되어 응답합니다.
 
 ---
 
@@ -393,26 +393,6 @@ Authorization: Bearer <your_jwt_token>
 
 토큰이 없거나 유효하지 않을 때 반환됩니다.
 
-```json
-{
-  "message": "인증 토큰이 필요합니다."
-}
-```
-
-또는
-
-```json
-{
-  "message": "유효하지 않은 토큰입니다."
-}
-```
-
 ### 500 Internal Server Error
 
 서버 내부 오류가 발생했을 때 반환됩니다.
-
-```json
-{
-  "message": "서버 오류가 발생했습니다."
-}
-```
